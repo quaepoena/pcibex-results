@@ -16,11 +16,8 @@ toResult line = (line !! 0 ++ "-" ++ line !! 1,
                  read (line !! 3) :: Int,
                  read (line !! 10) :: Int)
 
-perRating :: (String, [(Int, Int)]) -> [(String, Int, Int)]
-perRating (_, []) = []
-perRating (user, (x:xs)) =
-  let triplet username (item, value) = (username, item, value)
-  in triplet user x : perRating (user, xs)
+perRating :: String -> [(Int, Int)] -> [(String, Int, Int)]
+perRating user = map (\ (item, value) -> (user, item, value))
 
 printResult :: (String, Int, Int) -> String
 printResult (user, item, value) = user ++ "," ++ show item ++ "," ++ show value
@@ -40,6 +37,8 @@ main = do
                     . Map.fromListWith (++)
                     $ map (\ (user, item, value) -> (user, [(item, value)])) results
 
-      validResults = concat . map perRating $ Map.toList resultsByUser
+      validResults = concat
+                   . map (\ (user, ratings) -> perRating user ratings)
+                   $ Map.toList resultsByUser
 
   mapM_ putStrLn $ ["user,item,value"] ++ map printResult validResults
