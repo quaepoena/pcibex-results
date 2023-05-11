@@ -39,6 +39,6 @@ main = do
                     . Map.fromListWith (++)
                     $ map (\ (user, item, value) -> (user, [(item, value)])) results
 
-      validResults = foldl1 (++) . map perRating $ Map.toList resultsByUser
+      validResults = concat . map perRating $ Map.toList resultsByUser
 
   mapM_ putStrLn $ ["user,item,value"] ++ map printResult validResults
