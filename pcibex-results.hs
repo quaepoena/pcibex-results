@@ -18,16 +18,11 @@ toResult line = Result (line !! 0 ++ "-" ++ line !! 1)
                 (read (line !! 3) :: Int)
                 (read (line !! 10) :: Int)
 
-bar'' :: String -> (Int, Int) -> (String, Int, Int)
-bar'' user (item, value) = (user, item, value)
-
-bbar' :: (String, [(Int, Int)]) -> [(String, Int, Int)]
-bbar' (_, []) = []
-bbar' (user, (x:xs)) = bar'' user x : bbar' (user, xs)
-
-bar :: [(String, [(Int, Int)])] -> [(String, Int, Int)]
-bar [] = []
-bar (x:xs) = bbar' x ++ bar xs
+perRating :: (String, [(Int, Int)]) -> [(String, Int, Int)]
+perRating (_, []) = []
+perRating (user, (x:xs)) =
+  let triplet user (item, value) = (user, item, value)
+  in triplet user x : perRating (user, xs)
 
 printResult :: (String, Int, Int) -> String
 printResult (user, item, value) = show user ++ "," ++ show item ++ "," ++ show value
@@ -46,6 +41,6 @@ main = do
                     . Map.fromListWith (++)
                     $ map (\ (Result user item value) -> (user, [(item, value)])) results
 
-      validResults = bar $ Map.toList resultsByUser
+      validResults = foldl1 (++) . map perRating $ Map.toList resultsByUser
 
   mapM_ putStrLn $ ["user,item,value"] ++ map printResult validResults
