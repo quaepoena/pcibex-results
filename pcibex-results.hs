@@ -19,12 +19,13 @@ toResult line = (line !! 0 ++ "-" ++ line !! 1,
 perRating :: (String, [(Int, Int)]) -> [(String, Int, Int)]
 perRating (_, []) = []
 perRating (user, (x:xs)) =
-  let triplet user (item, value) = (user, item, value)
+  let triplet username (item, value) = (username, item, value)
   in triplet user x : perRating (user, xs)
 
 printResult :: (String, Int, Int) -> String
 printResult (user, item, value) = user ++ "," ++ show item ++ "," ++ show value
 
+main :: IO ()
 main = do
   (inputFile:_) <- getArgs
   contents <- readFile inputFile
