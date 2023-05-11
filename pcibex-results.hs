@@ -18,12 +18,19 @@ toResult line = Result (line !! 0 ++ "-" ++ line !! 1)
                 (read (line !! 3) :: Int)
                 (read (line !! 10) :: Int)
 
-average :: [Int] -> Double
-average values = (/) (fromIntegral (sum values))
-                     (fromIntegral (length values))
+bar'' :: String -> (Int, Int) -> (String, Int, Int)
+bar'' user (item, value) = (user, item, value)
 
-printAverage :: (Int, Double) -> String
-printAverage (item, avg) = show item ++ "," ++ show avg
+bbar' :: (String, [(Int, Int)]) -> [(String, Int, Int)]
+bbar' (_, []) = []
+bbar' (user, (x:xs)) = bar'' user x : bbar' (user, xs)
+
+bar :: [(String, [(Int, Int)])] -> [(String, Int, Int)]
+bar [] = []
+bar (x:xs) = bbar' x ++ bar xs
+
+printResult :: (String, Int, Int) -> String
+printResult (user, item, value) = show user ++ "," ++ show item ++ "," ++ show value
 
 main = do
   (inputFile:_) <- getArgs
@@ -34,14 +41,11 @@ main = do
               . map (splitOn ",")
               $ lines contents
 
+      -- Remove users that didn't complete the experiment.
       resultsByUser = Map.filter (\ x -> length x == 24)
                     . Map.fromListWith (++)
                     $ map (\ (Result user item value) -> (user, [(item, value)])) results
 
-      resultsByItem = Map.fromListWith (++)
-                    . map (\ (item, value) -> (item, [value]))
-                    $ Map.foldl (++) [] resultsByUser
+      validResults = bar $ Map.toList resultsByUser
 
-      averagePerItem = Map.toAscList $ Map.map average resultsByItem
-
-  mapM_ putStrLn $ ["item,average"] ++ map printAverage averagePerItem
+  mapM_ putStrLn $ ["user,item,value"] ++ map printResult validResults
