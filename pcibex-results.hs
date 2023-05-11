@@ -25,7 +25,7 @@ perRating (user, (x:xs)) =
   in triplet user x : perRating (user, xs)
 
 printResult :: (String, Int, Int) -> String
-printResult (user, item, value) = show user ++ "," ++ show item ++ "," ++ show value
+printResult (user, item, value) = user ++ "," ++ show item ++ "," ++ show value
 
 main = do
   (inputFile:_) <- getArgs
