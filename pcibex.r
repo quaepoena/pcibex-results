@@ -2,8 +2,7 @@
 # Based wholly off of Chris Wetherill's code found here:
 # https://datascienceplus.com/building-barplots-with-error-bars/
 
-install.packages("ggplot2")
-library("ggplot2")
+require("ggplot2")
 
 csv_data <- read.csv("/tmp/pcibex-output.csv")
 
