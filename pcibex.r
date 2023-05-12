@@ -3,10 +3,16 @@
 # https://datascienceplus.com/building-barplots-with-error-bars/
 
 require("ggplot2")
+require("dplyr")
 
 csv_data <- read.csv("/tmp/pcibex-output.csv")
 
-data <- aggregate(csv_data$value, by = list(csv_data$item),
+# target
+items <- c(3,5,7,9,11,13)
+# control
+#items <- c(4,6,8,10,12,14)
+
+data <- csv_data %>% filter(item %in% items)
                   FUN = function(x) c(mean = mean(x), sd = sd(x), n = length(x)))
 data <- do.call(data.frame, data)
 data$se <- data$x.sd / sqrt(data$x.n)
