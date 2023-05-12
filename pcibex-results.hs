@@ -1,6 +1,6 @@
 import Data.List.Split(splitOn)
 import System.Environment(getArgs)
-import System.IO(readFile)
+import System.IO(readFile, writeFile)
 
 import qualified Data.Map.Strict as Map
 
@@ -41,4 +41,5 @@ main = do
                    . map (\ (user, ratings) -> perRating user ratings)
                    $ Map.toList resultsByUser
 
-  mapM_ putStrLn $ ["user,item,value"] ++ map printResult validResults
+  writeFile "pcibex-output.csv" . unlines
+    $ ["user,item,value"] ++ map printResult validResults
