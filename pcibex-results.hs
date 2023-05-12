@@ -41,5 +41,5 @@ main = do
                    . map (\ (user, ratings) -> perRating user ratings)
                    $ Map.toList resultsByUser
 
-  writeFile "pcibex-output.csv" . unlines
+  writeFile "/tmp/pcibex-output.csv" . unlines
     $ ["user,item,value"] ++ map printResult validResults
