@@ -12,8 +12,8 @@ data <- aggregate(csv_data$value, by = list(csv_data$item),
 data <- do.call(data.frame, data)
 data$se <- data$x.sd / sqrt(data$x.n)
 colnames(data) <- c("item", "mean", "sd", "n", "se")
-data$names <- c("/1/", "/2/", "/3/", "/4/", "/5/", "/6/", "/7/", "/8/",
-                "/9/", "/10/", "/11/", "/12/", "/13/", "/14/", "/15/", "/16/",
+data$names <- c("/01/", "/02/", "/03/", "/04/", "/05/", "/06/", "/07/", "/08/",
+                "/09/", "/10/", "/11/", "/12/", "/13/", "/14/", "/15/", "/16/",
                 "/17/", "/18/", "/19/", "/20/", "/21/", "/22/", "/23/", "/24/")
 
 dodge <- position_dodge(width = 0.9)
