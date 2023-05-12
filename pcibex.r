@@ -5,7 +5,7 @@
 require("ggplot2")
 require("dplyr")
 
-csv_data <- read.csv("/tmp/pcibex-output.csv")
+csv_data <- read.csv("pcibex-output.csv")
 
 # target
 items <- c(3,5,7,9,11,13)
