@@ -5,7 +5,7 @@
 install.packages("ggplot2")
 library("ggplot2")
 
-csv_data <- read.csv("/tmp/pcibex-results.csv")
+csv_data <- read.csv("/tmp/pcibex-output.csv")
 
 data <- aggregate(csv_data$value, by = list(csv_data$item),
                   FUN = function(x) c(mean = mean(x), sd = sd(x), n = length(x)))
