@@ -25,13 +25,11 @@ dodge <- position_dodge(width = 0.9)
 limits <- aes(ymax = mean + se, ymin = mean - se)
 
 p_target <- ggplot(data = target_data, aes(x = items, y = mean, fill = items))
-
 p_target + geom_bar(stat = "identity", position = dodge) +
   geom_errorbar(limits, position = dodge, width = 0.25) +
   theme(axis.ticks.x=element_blank())
 
 p_control <- ggplot(data = control_data, aes(x = items, y = mean, fill = items))
-
 p_control + geom_bar(stat = "identity", position = dodge) +
   geom_errorbar(limits, position = dodge, width = 0.25) +
   theme(axis.ticks.x=element_blank())
