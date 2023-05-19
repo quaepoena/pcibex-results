@@ -1,5 +1,5 @@
 # Process the output from the Haskell program.
-# Based wholly off of Chris Wetherill's code found here:
+# Based largely off of Chris Wetherill's tutorial:
 # https://datascienceplus.com/building-barplots-with-error-bars/
 
 require("ggplot2")
