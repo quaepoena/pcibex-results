@@ -36,3 +36,4 @@ p_control + geom_bar(stat = "identity", position = dodge) +
   geom_errorbar(limits, position = dodge, width = 0.25) +
   theme(axis.ticks.x=element_blank())
 
+select(data, item, mean)
